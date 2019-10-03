@@ -1,6 +1,6 @@
 'use strict';
 
-const API = require('../API');
+const API = require('./API');
 
 class login extends API {
     prefix = 'https://tuanapi.12355.net/login';
