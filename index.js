@@ -33,12 +33,15 @@ async function main() {
         session = await tuanapi.login.getSessionAccount();
     }
     console.log(session.account.name);
-    console.log(session.account.sumLeagueMember, '名团员');
-    console.log(session.account.sumTransferringRollinMember, '份待审核转入申请');
-    console.log(session.account.sumTransferringRolloutMember, '份待审核转出申请');
+
+    logStep('正在获取统计数据');
+    const statistics = (await tuanapi.bg.orgStatistics.statisticsResult.list()).data;
+    console.log(statistics.leagueMember, '名团员');
+    console.log(statistics.leagueReportMember, '份团员报到&资料修改审核');
+    console.log(statistics.toexamineNumber, '份核组织关系转接待审');
 
     logStep('正在获取未交团费名单');
-    let details = await tuanapi.bg.getPaymentStatisticsDetails({ pageSize: session.account.sumLeagueMember, oid: session.account.oid, status: 0 });
+    let details = await tuanapi.bg.getPaymentStatisticsDetails({ pageSize: statistics.leagueMember, oid: session.account.oid, status: 0 });
     if (details.rows.length) {
         console.table(details.rows, ['memberName', 'fees', 'payStr']);
         if (config.genFeeMsg) {
