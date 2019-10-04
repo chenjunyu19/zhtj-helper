@@ -2,7 +2,9 @@
     "username": "",
     "password": "",
     "checkInfo": {
-        "thePartyYears": null
+        "thePartyYears": null,
+        "degreeOfEducation": 10,
+        "highestEducation": 10
     },
     "genFeeMsg": true
 }
