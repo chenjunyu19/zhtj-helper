@@ -1,10 +1,11 @@
 {
     "username": "",
     "password": "",
+    "checkFee": true,
+    "genFeeMsg": true,
     "checkInfo": {
         "thePartyYears": null,
         "degreeOfEducation": 10,
         "highestEducation": 10
-    },
-    "genFeeMsg": true
+    }
 }

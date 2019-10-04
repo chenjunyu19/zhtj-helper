@@ -40,21 +40,23 @@ async function main() {
     console.log(statistics.leagueReportMember, '份团员报到&资料修改审核');
     console.log(statistics.toexamineNumber, '份核组织关系转接待审');
 
-    logStep('正在获取未交团费名单...');
-    let details = await tuanapi.bg.getPaymentStatisticsDetails({ pageSize: statistics.leagueMember, oid: session.account.oid, status: 0 });
-    if (details.rows.length) {
-        console.table(details.rows, ['memberName', 'fees', 'payStr']);
-        if (config.genFeeMsg) {
-            logStep('正在生成团费催交消息...');
-            let msg = '请以下同学尽快交纳团费：';
-            for (const row of details.rows) {
-                msg += `@${row.memberName} `;
+    if (config.checkFee) {
+        logStep('正在获取未交团费名单...');
+        let details = await tuanapi.bg.getPaymentStatisticsDetails({ pageSize: statistics.leagueMember, oid: session.account.oid, status: 0 });
+        if (details.rows.length) {
+            console.table(details.rows, ['memberName', 'fees', 'payStr']);
+            if (config.genFeeMsg) {
+                logStep('正在生成团费催交消息...');
+                let msg = '请以下同学尽快交纳团费：';
+                for (const row of details.rows) {
+                    msg += `@${row.memberName} `;
+                }
+                msg += 'http://t.cn/RHjFAH7';
+                console.log(msg);
             }
-            msg += 'http://t.cn/RHjFAH7';
-            console.log(msg);
+        } else {
+            console.log('真棒，全部交完了！');
         }
-    } else {
-        console.log('真棒，全部交完了！');
     }
 
     if (config.checkInfo) {
