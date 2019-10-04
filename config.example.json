@@ -1,5 +1,8 @@
 {
     "username": "",
     "password": "",
+    "checkInfo": {
+        "thePartyYears": null
+    },
     "genFeeMsg": true
 }

@@ -34,18 +34,18 @@ async function main() {
     }
     console.log(session.account.name);
 
-    logStep('正在获取统计数据');
+    logStep('正在获取统计数据...');
     const statistics = (await tuanapi.bg.orgStatistics.statisticsResult.list()).data;
     console.log(statistics.leagueMember, '名团员');
     console.log(statistics.leagueReportMember, '份团员报到&资料修改审核');
     console.log(statistics.toexamineNumber, '份核组织关系转接待审');
 
-    logStep('正在获取未交团费名单');
+    logStep('正在获取未交团费名单...');
     let details = await tuanapi.bg.getPaymentStatisticsDetails({ pageSize: statistics.leagueMember, oid: session.account.oid, status: 0 });
     if (details.rows.length) {
         console.table(details.rows, ['memberName', 'fees', 'payStr']);
         if (config.genFeeMsg) {
-            logStep('正在生成团费催交消息');
+            logStep('正在生成团费催交消息...');
             let msg = '请以下同学尽快交纳团费：';
             for (const row of details.rows) {
                 msg += `@${row.memberName} `;
@@ -55,6 +55,21 @@ async function main() {
         }
     } else {
         console.log('真棒，全部交完了！');
+    }
+
+    if (config.checkInfo) {
+        logStep('正在校验团员信息...');
+        let members = (await tuanapi.members.bg.list({ rows: statistics.leagueMember })).rows;
+        for (const item in config.checkInfo) {
+            const value = config.checkInfo[item];
+            let msg = `${item} !== ${value}: `;
+            for (const member of members) {
+                if (member[item] !== value) {
+                    msg += `@${member.name} `;
+                }
+            }
+            console.log(msg);
+        }
     }
 }
 
