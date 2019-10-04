@@ -4,7 +4,9 @@ const API = require('./API');
 const statisticsResult = require('./bg_orgStatistics_statisticsResult');
 
 class orgStatistics extends API {
-    prefix = 'https://tuanapi.12355.net/bg/orgStatistics';
+    constructor(tuanapi) {
+        super(tuanapi, __filename);
+    }
 
     statisticsResult = new statisticsResult(this.tuanapi);
 }

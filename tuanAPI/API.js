@@ -1,6 +1,7 @@
 'use strict';
 
 const https = require('https');
+const path = require('path');
 
 /**
  * 将选项追加为 GET 请求参数
@@ -15,10 +16,9 @@ function joinOptions(path, options) {
 }
 
 class API {
-    prefix;
-
-    constructor(tuanapi) {
+    constructor(tuanapi, filename) {
         this.tuanapi = tuanapi;
+        this.prefix = 'https://tuanapi.12355.net/' + path.basename(filename, '.js').replace(/_/g, '/');
     }
 
     getAPI(path, options) {

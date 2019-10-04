@@ -3,7 +3,9 @@
 const API = require('./API');
 
 class statisticsResult extends API {
-    prefix = 'https://tuanapi.12355.net/bg/orgStatistics/statisticsResult';
+    constructor(tuanapi) {
+        super(tuanapi, __filename);
+    }
 
     async list() {
         return await this.getAPI('/list');
