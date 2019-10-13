@@ -31,9 +31,9 @@ class API {
                 if (res.headers["set-cookie"]) {
                     this.tuanapi.cookie = res.headers["set-cookie"];
                 }
-                let data = '';
+                let data = Buffer.alloc(0);
                 res.on('data', (chunk) => {
-                    data += chunk;
+                    data = Buffer.concat([data, chunk]);
                 });
                 res.on('end', () => {
                     resolve(JSON.parse(data));
