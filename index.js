@@ -54,6 +54,7 @@ async function main() {
                 msg += 'http://t.cn/RHjFAH7';
                 console.log(msg);
             }
+            console.log('交纳率', (statistics.leagueMember - details.rows.length) / statistics.leagueMember);
         } else {
             console.log('真棒，全部交完了！');
         }
