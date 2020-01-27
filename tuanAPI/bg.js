@@ -1,14 +1,11 @@
 'use strict';
 
 const API = require('./API');
-const orgStatistics = require('./bg_orgStatistics');
 
 class bg extends API {
     constructor(tuanapi) {
         super(tuanapi, __filename);
     }
-
-    orgStatistics = new orgStatistics(this.tuanapi);
 
     /**
      * 查询团费统计详情

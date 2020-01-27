@@ -19,6 +19,7 @@ class API {
     constructor(tuanapi, filename) {
         this.tuanapi = tuanapi;
         this.prefix = 'https://tuanapi.12355.net/' + path.basename(filename, '.js').replace(/_/g, '/');
+        tuanapi.loadNext(filename, this);
     }
 
     getAPI(path, options) {
