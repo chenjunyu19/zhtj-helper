@@ -2,20 +2,9 @@
 
 const https = require('https');
 const path = require('path');
+const querystring = require('querystring');
 
 let mtuanapi;
-
-/**
- * 将选项追加为 GET 请求参数
- * @param {string} path 路径
- * @param {Object} options 选项
- */
-function joinOptions(path, options) {
-    for (const option in options) {
-        path += `${path.includes('?') ? '&' : '?'}${option}=${options[option]}`;
-    }
-    return path;
-}
 
 class API {
     constructor(tuanapi, filename) {
@@ -32,7 +21,9 @@ class API {
         }
         options._ = Date.now();
         return new Promise((resolve) => {
-            https.get(this.prefix + joinOptions(path, options), { headers: { cookie: mtuanapi.cookie || '' } }, (res) => {
+            const url = new URL(this.prefix + path);
+            url.search = querystring.stringify(options);
+            https.get(url, { headers: { cookie: mtuanapi.cookie || '' } }, (res) => {
                 if (res.headers['set-cookie']) {
                     mtuanapi.cookie = res.headers['set-cookie'];
                 }

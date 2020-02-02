@@ -7,7 +7,7 @@ module.exports = class login extends require('./API') {
      * @param {string} password 密码
      */
     async adminLogin(userName, password) {
-        return await this.getAPI(`/adminLogin?userName=${userName}&password=${password}`);
+        return await this.getAPI('/adminLogin', { userName, password });
     }
 
     /**
