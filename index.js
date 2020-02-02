@@ -25,7 +25,7 @@ async function main() {
     let session = await tuanapi.login.getSessionAccount();
     while (session.status !== 'OK' || session.account.username !== config.username) {
         logStep('登录信息已失效，正在重新登录...');
-        console.log(await tuanapi.login.adminLogin(config.username, config.password));;
+        console.log(await tuanapi.login.adminLogin(config.username, config.password));
         logStep('正在保存配置...');
         config.cookie = tuanapi.cookie;
         fs.writeFileSync(configFilePath, JSON.stringify(config, undefined, 4));

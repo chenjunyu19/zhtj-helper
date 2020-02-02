@@ -29,8 +29,8 @@ class API {
         options._ = Date.now();
         return new Promise((resolve) => {
             https.get(this.prefix + joinOptions(path, options), { headers: { cookie: this.tuanapi.cookie || '' } }, (res) => {
-                if (res.headers["set-cookie"]) {
-                    this.tuanapi.cookie = res.headers["set-cookie"];
+                if (res.headers['set-cookie']) {
+                    this.tuanapi.cookie = res.headers['set-cookie'];
                 }
                 let data = Buffer.alloc(0);
                 res.on('data', (chunk) => {
