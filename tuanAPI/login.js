@@ -1,12 +1,6 @@
 'use strict';
 
-const API = require('./API');
-
-class login extends API {
-    constructor(tuanapi) {
-        super(tuanapi, __filename);
-    }
-
+module.exports = class login extends require('./API') {
     /**
      * 登录
      * @param {string} userName 用户名
@@ -22,6 +16,4 @@ class login extends API {
     async getSessionAccount() {
         return await this.getAPI('/getSessionAccount');
     }
-}
-
-module.exports = login;
+};

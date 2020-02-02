@@ -35,7 +35,7 @@ module.exports = class tuanAPI {
             if (getLevel(fileToLoad) === level + 1) {
                 const fileToLoadBasename = path.basename(fileToLoad, '.js');
                 if (!level || fileToLoadBasename.startsWith(basename)) {
-                    api[fileToLoadBasename.split('_')[level]] = new (require(path.join(__dirname, fileToLoad)))(this);
+                    api[fileToLoadBasename.split('_')[level]] = new (require(path.join(__dirname, fileToLoad)))(this, fileToLoad);
                 }
             }
         }

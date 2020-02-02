@@ -1,12 +1,6 @@
 'use strict';
 
-const API = require('./API');
-
-class bg extends API {
-    constructor(tuanapi) {
-        super(tuanapi, __filename);
-    }
-
+module.exports = class bg extends require('./API') {
     /**
      * 查询团费统计详情
      * @param {Object} options 查询条件
@@ -26,6 +20,4 @@ class bg extends API {
     async getPaymentStatisticsDetails(options) {
         return await this.getAPI('/getPaymentStatisticsDetails', options);
     }
-}
-
-module.exports = bg;
+};

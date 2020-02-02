@@ -3,6 +3,8 @@
 const https = require('https');
 const path = require('path');
 
+let mtuanapi;
+
 /**
  * 将选项追加为 GET 请求参数
  * @param {string} path 路径
@@ -17,7 +19,9 @@ function joinOptions(path, options) {
 
 class API {
     constructor(tuanapi, filename) {
-        this.tuanapi = tuanapi;
+        if (!mtuanapi) {
+            mtuanapi = tuanapi;
+        }
         this.prefix = 'https://tuanapi.12355.net/' + path.basename(filename, '.js').replace(/_/g, '/');
         tuanapi.loadNext(filename, this);
     }
@@ -28,9 +32,9 @@ class API {
         }
         options._ = Date.now();
         return new Promise((resolve) => {
-            https.get(this.prefix + joinOptions(path, options), { headers: { cookie: this.tuanapi.cookie || '' } }, (res) => {
+            https.get(this.prefix + joinOptions(path, options), { headers: { cookie: mtuanapi.cookie || '' } }, (res) => {
                 if (res.headers['set-cookie']) {
-                    this.tuanapi.cookie = res.headers['set-cookie'];
+                    mtuanapi.cookie = res.headers['set-cookie'];
                 }
                 let data = Buffer.alloc(0);
                 res.on('data', (chunk) => {
