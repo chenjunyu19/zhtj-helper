@@ -32,7 +32,11 @@ class API {
                     data = Buffer.concat([data, chunk]);
                 });
                 res.on('end', () => {
-                    resolve(JSON.parse(data));
+                    if (res.statusCode === 200) {
+                        resolve(JSON.parse(data));
+                    } else {
+                        throw `[${res.statusCode}] ${url}`;
+                    }
                 });
             });
         });
