@@ -25,7 +25,7 @@ async function main() {
     let session = await tuanapi.login.getSessionAccount();
     while (session.status !== 'OK' || session.account.username !== config.username) {
         logStep('登录信息已失效，正在重新登录...');
-        console.log(await tuanapi.login.adminLogin(config.username, config.password));
+        await tuanapi.login.adminLogin(config.username, config.password);
         logStep('正在保存配置...');
         config.cookie = tuanapi.cookie;
         fs.writeFileSync(configFilePath, JSON.stringify(config, undefined, 4));
@@ -36,9 +36,15 @@ async function main() {
 
     logStep('正在获取统计数据...');
     const statistics = (await tuanapi.bg.orgStatistics.statisticsResult.list()).data;
-    console.log(statistics.leagueMember, '名团员');
-    console.log(statistics.leagueReportMember, '份团员报到&资料修改审核');
-    console.log(statistics.toexamineNumber, '份核组织关系转接待审');
+    for (const item of [
+        [statistics.leagueMember, '名团员'],
+        [statistics.leagueReportMember, '份团员报到&资料修改审核'],
+        [statistics.toexamineNumber, '份核组织关系转接待审']
+    ]) {
+        if (item[0]) {
+            console.log(item[0], item[1]);
+        }
+    }
 
     if (config.checkFee) {
         logStep('正在获取未交团费名单...');
