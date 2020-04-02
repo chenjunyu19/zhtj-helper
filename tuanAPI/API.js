@@ -20,7 +20,7 @@ class API {
             options = {};
         }
         options._ = Date.now();
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             const url = new URL(this.prefix + path);
             url.search = querystring.stringify(options);
             https.get(url, { headers: { cookie: mtuanapi.cookie || '' } }, (res) => {
@@ -35,7 +35,7 @@ class API {
                     if (res.statusCode === 200) {
                         resolve(JSON.parse(data));
                     } else {
-                        throw `[${res.statusCode}] ${url}`;
+                        reject(`[HTTP ${res.statusCode}] ${url}`);
                     }
                 });
             });

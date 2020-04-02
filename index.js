@@ -16,6 +16,10 @@ function logStep(message) {
     console.log('\u001b[1m\u001b[34m::\u001b[0m\u001b[1m %s\u001b[0m', message);
 }
 
+function logError(message) {
+    console.log(`\u001b[1m\u001b[31m错误：\u001b[0m${message}`);
+}
+
 async function main() {
     logStep('正在读取配置...');
     const config = JSON.parse(readFileSyncSafe(configFilePath)) || {};
@@ -82,4 +86,7 @@ async function main() {
     }
 }
 
-main();
+main().catch((reason) => {
+    logError(reason);
+    process.exitCode = 1;
+});
