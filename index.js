@@ -87,6 +87,10 @@ async function main() {
 }
 
 main().catch((reason) => {
-    logError(reason);
-    process.exitCode = 1;
+    if (typeof reason === 'string') {
+        logError(reason);
+        process.exitCode = 1;
+    } else {
+        throw reason;
+    }
 });
