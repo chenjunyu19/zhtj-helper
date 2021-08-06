@@ -84,6 +84,11 @@ async function main() {
             console.log(msg);
         }
     }
+
+    if (config.showYouthStudyURL) {
+        logStep('正在获取青年大学习后台登录 URL...');
+        console.log((await tuanapi.questionnaire.getPcYouthLearningUrl()).youthLearningUrl);
+    }
 }
 
 main().catch((reason) => {

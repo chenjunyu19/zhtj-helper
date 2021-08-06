@@ -7,5 +7,6 @@
         "thePartyYears": null,
         "degreeOfEducation": 10,
         "highestEducation": 10
-    }
+    },
+    "showYouthStudyURL": true
 }
